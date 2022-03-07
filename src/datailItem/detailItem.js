@@ -10,7 +10,7 @@ const DetailedItem = ({detailItemData}) =>{
 
 
     return(
-        <div>
+        <div className="detail">
            <div>id: <b> {detailItemData.id}</b>   </div>  
             <div>firstName:<b>{detailItemData.firstName}</b> </div>
             <div>lastName:<b>{detailItemData.lastName}</b> </div>

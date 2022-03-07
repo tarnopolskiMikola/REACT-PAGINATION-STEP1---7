@@ -4,6 +4,8 @@ const baseUrl = 'http://www.filltext.com/?rows=32&id={...|1000}&firstName={first
 const useServerData = ({url, isButtonClick}) =>{
     const [contactData, setContactDate] = useState([]);
 
+    const[isLoaded, setIsLoaded] = useState(false);
+
     const getData = () =>{
 
     }
@@ -19,10 +21,11 @@ const useServerData = ({url, isButtonClick}) =>{
           (res)=>{
             setContactDate(res.data);
             // setIsLoading(false)
+            setIsLoaded(true)
           }
         );
       }, [url]);
-    return[{contactData, setContactDate},  getData ]
+    return[{contactData, setContactDate, isLoaded},  getData ]
 }
 
 export default useServerData

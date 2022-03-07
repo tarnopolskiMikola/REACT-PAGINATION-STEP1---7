@@ -15,6 +15,7 @@ const Table = ({sortData, contactData, directionSort, detailRow}) => {
  const fieldSortData = (field) => {
    sortData(field)
    setFieldData(field)
+    
  }
 
     return (
