@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Paginator = ({pages, currentPagef}) => {
+const Paginator = ({pages, currentPagef,onNextClick,onPreviousClick}) => {
     return(
         <nav aria-label="...">
   <ul className="pagination">
-    <li className="page-item disabled">
-      <a className="page-link" href="/#" tabIndex="-1">Previous</a>
+    <li className="page-item  ">
+      <a className="page-link" href="/#" tabIndex="-1" onClick={()=>{onPreviousClick()}} >Previous</a>
     </li>
     {
         pages.map(p=>{
@@ -21,7 +21,7 @@ const Paginator = ({pages, currentPagef}) => {
 
   
     <li className="page-item">
-      <a className="page-link" href="/#" >Next</a>
+      <a className="page-link" href="/#" onClick={()=>{onNextClick()}} >Next</a>
     </li>
   </ul>
 </nav>

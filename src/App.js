@@ -26,35 +26,35 @@ const limitCountPage = 50;
 const buttonHandler = (url) => {
   setUrl(url)
   setIsButtonClick(true)
-  console.log(url)
+  // console.log(url)
 }
 
+const lastBlockRow = currentPage*limitCountPage
+const firstBlockRow =  lastBlockRow - limitCountPage
+const currentBlockRows = contactData.slice(firstBlockRow,lastBlockRow)
+ 
+
+
 const currentPagef = (pag) =>{
- 
   setCurrentPage(pag)
- 
 }
 
 useEffect(()=>{
   if(!isLoaded){
     return
   }
- 
   setTotalCountRow(contactData.length)
   const  getTotalCountPage = totalCountRow/limitCountPage;
   setTotalCountPage(getTotalCountPage)
   // console.log(totalCountRow + " ---- dlina dla plaginator Row")
   // console.log( getTotalCountPage + " ---- dlina dla plaginator Page")
-
-  
   currentPagef()
   
 },[isLoaded, setTotalCountRow, contactData.length, totalCountRow ])
-console.log(currentPage+'------------ currentPage------------')
- 
+// console.log(currentPage+'------------ currentPage------------')
+
 
 let pages = []
-
 for(let i=1; i<= totalCountPage; i++){
   pages.push(i)
 }
@@ -92,18 +92,38 @@ const detailRow = (row)=>{
   setrowItem(row)
   setrowIsClick(true)
 }
+const onNextClick =() =>{
+  if(currentPage>totalCountPage-1){
+    return  
+  }
+  setCurrentPage(currentPage+1)
+  
+}
 
+const onPreviousClick =() =>{
+  
+  if(currentPage<2){
+    return  
+  }
+  setCurrentPage(currentPage-1)
+}
+
+ 
+
+let i = -1;
   return (
      <div className="container">
        {/* <Loader/> */}
      <Switcher buttonHandler={buttonHandler}/>
      {rowIsClick? <DetailedItem   detailItemData={rowItem} /> : null}
-     <Paginator pages={pages} currentPagef={currentPagef}/>
+     <Paginator pages={pages} currentPagef={currentPagef} onNextClick={onNextClick} onPreviousClick={onPreviousClick}/>
        <Table 
-       contactData={contactData}
+       contactData={currentBlockRows}
        sortData={sortData}
        directionSort={directionSort}
        detailRow={detailRow}
+      i={i}
+      firstBlockRow={firstBlockRow}
        />
         
        
