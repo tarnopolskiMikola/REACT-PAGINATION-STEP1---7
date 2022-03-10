@@ -9,7 +9,7 @@ import './datailItem/deteil.css';
 import Paginator from './paginator/paginator';
 function App() {
 
-const baseUrl = 'http://www.filltext.com/?rows=32&id={...|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}'
+//const baseUrl = 'http://www.filltext.com/?rows=32&id={...|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}'
 // const [contactData , setContactDate] = useState([]);
 const [isButtonClick, setIsButtonClick] = useState(false)
 const [directionSort, setDirectionSort] = useState(true);
@@ -19,7 +19,10 @@ const [totalCountRow, setTotalCountRow] = useState(0);
 const [totalCountPage, setTotalCountPage] = useState(0);
 const [rowIsClick, setrowIsClick] = useState(false);
 const [{contactData, setContactDate, isLoaded},  getData ] = useServerData({url, isButtonClick});
-const [currentPage, setCurrentPage]  = useState(null);
+const [currentPage, setCurrentPage]  = useState(1);
+const [buttonNextDisabled, setButtonNextDisabled] = useState('page-item');
+const [buttonPreviousDisabled, setButtonPreviousDisabled] = useState('page-item');
+const [currentPageActiv, setcurrentPageActiv] = useState('page-item');
 const limitCountPage = 50;
 
 
@@ -36,7 +39,10 @@ const currentBlockRows = contactData.slice(firstBlockRow,lastBlockRow)
 
 
 const currentPagef = (pag) =>{
-  setCurrentPage(pag)
+  setCurrentPage(pag);
+  setButtonNextDisabled('')
+  setButtonPreviousDisabled('')
+  setcurrentPageActiv('active')
 }
 
 useEffect(()=>{
@@ -92,17 +98,22 @@ const detailRow = (row)=>{
   setrowItem(row)
   setrowIsClick(true)
 }
+
+
 const onNextClick =() =>{
+  setButtonPreviousDisabled('')
   if(currentPage>totalCountPage-1){
+    setButtonNextDisabled('disabled')
     return  
   }
   setCurrentPage(currentPage+1)
-  
+   
 }
 
 const onPreviousClick =() =>{
-  
+  setButtonNextDisabled('')
   if(currentPage<2){
+    setButtonPreviousDisabled('disabled')
     return  
   }
   setCurrentPage(currentPage-1)
@@ -116,7 +127,14 @@ let i = -1;
        {/* <Loader/> */}
      <Switcher buttonHandler={buttonHandler}/>
      {rowIsClick? <DetailedItem   detailItemData={rowItem} /> : null}
-     <Paginator pages={pages} currentPagef={currentPagef} onNextClick={onNextClick} onPreviousClick={onPreviousClick}/>
+     <Paginator pages={pages} currentPagef={currentPagef} 
+                onNextClick={onNextClick} 
+                onPreviousClick={onPreviousClick}
+                buttonNextDisabled={buttonNextDisabled}
+                buttonPreviousDisabled={buttonPreviousDisabled}
+                currentPageActiv={currentPageActiv}
+                currentPage={currentPage}
+                />
        <Table 
        contactData={currentBlockRows}
        sortData={sortData}
